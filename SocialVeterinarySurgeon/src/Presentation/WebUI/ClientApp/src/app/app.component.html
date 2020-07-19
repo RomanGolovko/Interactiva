@@ -1,0 +1,80 @@
+<h1>Employees list</h1>
+<input type="button" value="Add" class="btn btn-default" (click)="add()" />
+<table *ngIf="tableMode; else create" class="table table-striped">
+    <thead>
+        <tr>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Is Media Interactiva Employee</td>
+            <td>Pet Name</td>
+            <td>Pet Type</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let e of employees">
+            <ng-template [ngIf]="employee?.id != e.id" [ngIfElse]="edit">
+                <td>{{e?.firstName}}</td>
+                <td>{{e?.lastName}}</td>
+                <td>{{e?.mediaInteractivaEmployee}}</td>
+                <td>{{e?.pet.name}}</td>
+                <td>{{e?.pet.type}}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" (click)="editProduct(e)">Edit</button>
+                    <button class="btn btn-sm btn-danger" (click)="delete(e)">Delete</button>
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+ 
+<!--edit template-->
+<ng-template #edit>
+    <td>
+        <input type="text" [(ngModel)]="employee.firstName" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="employee.lastName" class="form-control" />
+    </td>
+    <td>
+        <input type="checkbox" [(ngModel)]="employee.mediaInteractivaEmployee" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="employee.pet.name" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="employee.pet.type" class="form-control" />
+    </td>
+    <td>
+        <input type="button" value="Save" (click)="save()" class="btn btn-sm btn-success" />
+        <input type="button" value="Cancel" (click)="cancel()" class="btn btn-sm btn-warning" />
+    </td>
+</ng-template>
+ 
+<!--add template-->
+<ng-template #create>
+    <div class="form-group">
+        <label>First Name</label>
+        <input type="text" [(ngModel)]="employee.firstName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" [(ngModel)]="employee.lastName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Is Media Interactiva Employee?</label>
+        <input type="checkbox" [(ngModel)]="employee.mediaInteractivaEmployee" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Pet Name</label>
+        <input type="text" [(ngModel)]="pet.name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Type</label>
+        <input type="text" [(ngModel)]="pet.type" class="form-control" />
+    </div>
+    <div>
+        <input type="button" value="Save" (click)="save()" class="btn btn-success" />
+        <input type="button" value="Cancel" (click)="cancel()" class="btn btn-warning" />
+    </div>
+</ng-template>
